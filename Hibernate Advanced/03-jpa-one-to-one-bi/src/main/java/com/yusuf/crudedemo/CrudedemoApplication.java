@@ -27,9 +27,17 @@ public class CrudedemoApplication {
 //			Silme İşlemini gerçekleştirken de cascade olduğu için instructor_detail'de silinecektir
 //			deleteInstructor(appDao);
 
-			findInstructorDetail(appDao);
+//			findInstructorDetail(appDao);
+//			Silme İşlemini gerçekleştirken de cascade olduğu için instructor'da silinecektir
+			deleteInstructorDetail(appDao);
 
 		};
+	}
+
+	private void deleteInstructorDetail(AppDao appDao) {
+		int id = 3;
+		System.out.println("Delete by id for InstructorId: "+id);
+		appDao.deleteInstructorDetailById(id);
 	}
 
 	private void findInstructorDetail(AppDao appDao) {
@@ -52,8 +60,8 @@ public class CrudedemoApplication {
 	}
 
 	private void createInstructor(AppDao appDao) {
-		Instructor tempInstructor = new Instructor("Fatma","Pehlivan","salladim@gmail.com");
-		InstructorDetail instructorDetail = new InstructorDetail("http://www.youtube.com","Make a fitness");
+		Instructor tempInstructor = new Instructor("Dusab","Tadic","salladim@gmail.com");
+		InstructorDetail instructorDetail = new InstructorDetail("http://www.youtube.com","play a football match");
 		tempInstructor.setInstructorDetail(instructorDetail);
 
 		// Cascade all olduğu için aynı zamanda InstrutorDetail'e de kaydedilmiş olacak.
