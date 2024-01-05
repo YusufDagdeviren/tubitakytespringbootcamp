@@ -14,9 +14,6 @@ import javax.sql.DataSource;
 @Configuration
 public class DemoSecurityConfig {
 
-    // add support for JDBC .....  no more hardcoded users :-)
-
-
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource) {
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
@@ -35,7 +32,6 @@ public class DemoSecurityConfig {
 
         return jdbcUserDetailsManager;
     }
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
