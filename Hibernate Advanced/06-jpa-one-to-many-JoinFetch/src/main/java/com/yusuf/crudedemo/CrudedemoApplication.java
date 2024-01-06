@@ -44,8 +44,25 @@ public class CrudedemoApplication {
 //			findCoursesForInstructor(appDao);
 
 			// Projeyi EagerLoading'e bağımlı yapmadan istediğimizde Eager yapma imkanı sundu
-			findInstructorWithCoursesJoinFetch(appDao);
+//			findInstructorWithCoursesJoinFetch(appDao);
+
+			updateInstructor(appDao);
 		};
+	}
+
+	private void updateInstructor(AppDao appDao) {
+		int theId = 1;
+		// find the instructor
+		System.out.println("Finding instructor id : "+theId);
+		Instructor instructor = appDao.findInstructorById(theId);
+
+		// update the instructor
+		System.out.println("Updating instructor id: "+theId);
+
+		instructor.setLastName("Tadfico");
+		appDao.update(instructor);
+
+		System.out.println("Done!");
 	}
 
 	private void findInstructorWithCoursesJoinFetch(AppDao appDao) {
