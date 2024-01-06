@@ -1,12 +1,16 @@
 package com.yusuf.crudedemo.dao.Impl;
 
 import com.yusuf.crudedemo.dao.AppDao;
+import com.yusuf.crudedemo.entity.Course;
 import com.yusuf.crudedemo.entity.Instructor;
 import com.yusuf.crudedemo.entity.InstructorDetail;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Repository
 public class AppDaoImpl implements AppDao {
@@ -54,5 +58,17 @@ public class AppDaoImpl implements AppDao {
         // break bi-directional link
         instructorDetail.getInstructor().setInstructorDetail(null);
         entityManager.remove(instructorDetail);
+    }
+
+    // lazy loading yani ihtiyaç olduğunda getir.
+    @Override
+    public List<Course> findCoursesByInstructor(int theId) {
+        TypedQuery<Course> query = entityManager.createQuery("from Course where instructor.id = :data",Course.class);
+
+        query.setParameter("data",theId);
+
+        List<Course> courses = query.getResultList();
+
+        return courses;
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 public class CrudedemoApplication {
 
@@ -33,10 +35,38 @@ public class CrudedemoApplication {
 //			deleteInstructorDetail(appDao);
 
 //			Kurs ile birlikte Instructor_Detail'de beraber olmak üzere ekledik
-			createInstructorWithCourses(appDao);
+//			createInstructorWithCourses(appDao);
 
+//			findInstructorWithCourses(appDao);
 
+			findCoursesForInstructor(appDao);
 		};
+	}
+
+	private void findCoursesForInstructor(AppDao appDao) {
+		int theId = 1;
+		// Lazy loading olduğu için Instructor'ın kursları gelmedi henüz
+		Instructor instructor = appDao.findInstructorById(theId);
+		System.out.println("Temp Instructor: "+ instructor);
+
+		// Lazy loading ile ihtiyacımız olduğunda kurslarımızı aldık
+		List<Course> courses = appDao.findCoursesByInstructor(theId);
+		instructor.setCourses(courses);
+		System.out.println("the associated courses: " + instructor.getCourses());
+
+	}
+
+	private void findInstructorWithCourses(AppDao appDao) {
+		int theId = 1;
+		System.out.println("Finding instructor id: "+ theId);
+
+		Instructor tempInstructor = appDao.findInstructorById(theId);
+
+		System.out.println("tempInstructor: "+ tempInstructor);
+		// Default olarak @OneToMany ilişkimiz lazy olduğu için aşağıdaki kodda exception alırız kısa ve kötü çözüm için eager yap.
+		System.out.println("the associated courses: "+ tempInstructor.getCourses());
+
+		System.out.println("Done!");
 	}
 
 	private void createInstructorWithCourses(AppDao appDao) {
